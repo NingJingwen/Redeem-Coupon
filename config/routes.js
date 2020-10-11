@@ -19,7 +19,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  //'/': { view: 'pages/homepage' },
 
 
   /***************************************************************************
@@ -33,19 +33,18 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET/': 'PersonController.homepage',
+  'GET /': 'PersonController.homepage',
 
   'GET /person/create': 'PersonController.create',
   'POST /person/create': 'PersonController.create',
 
+  'GET /person/admin': 'PersonController.admin',
   
-  'GET /person/list': 'PersonController.list',
-  'GET /person/json': 'PersonController.json',
 
   'GET /person/read/:id': 'PersonController.read',
   'POST /person/delete/:id': 'PersonController.delete',
 
-  'GET /person/update': 'PersonController.update',
+  'GET /person/update/:id': 'PersonController.update',
   'POST /person/update/:id': 'PersonController.update',
   
   'GET /person/search': 'PersonController.search',

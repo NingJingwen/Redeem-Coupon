@@ -1,34 +1,24 @@
-<section class="section">
-    <div class="container">
+
         <div class="columns">
 
-            <div class="column">
+            <div class="column is-half">
                 <div>
-                    <img src=<%= person.Image %>>
+                    <img src=<%= Coupon.Image %>>
                 </div>
             </div>
 
-            <div class="column">
-               <div> <%= person.Title %></div>
-               <div><%= person.Restaurant %></div>
-               <div><%= person.Region %></div>
-               <div><%= person.Mall %></div>
-               <div><%= person.Image %></div>
-               <div><%= person.Quota %></div>
-               <div><%= person.Coins %></div>
-               <div><%= person.Experied_Date %></div>
-               <div><%= person.Quota %></div>
-               <div><%= person.Coins %></div>
-               <div><%= person.Experied_Date %></div>
-               <div><%= person.Detail %></div>
+            <div class="column is-half">
+                <ul>
+                    <li><strong><%= Coupon.restaurant %></strong></li>
+                    <li><strong><%= Coupon.title %></strong></li>
+                    <li><strong>Coins: </strong><%= Coupon.Coins %></li>
+                    <li><strong>Address: </strong><%= Coupon.Region %>, <%= Coupon.Mall %></li>
+                    <li><strong>Expired_Date: </strong><%= Coupon.Expired_Date %></li>
+                    <li><%= Coupon.Detail %></li>
+                </ul>
             </div>
 
         </div>
-    </div>
-</section>
 
 
-<form action="/person/delete/<%= person.id %>" method="POST">
 
-    <button type="submit">Delete</button>
-</form>

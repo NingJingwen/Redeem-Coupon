@@ -17,7 +17,7 @@
     <section class="section">
         <div class="container">
             <h1 class="title">
-                Caprice
+                Coupons
             </h1>
             <p class="subtitle">
                 You deserve me!
@@ -26,93 +26,99 @@
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="columns">
+    <div class="columns">
 
-                <% region1s.forEach(function(region) { %>
+        <div class="column is-one-third">
+            <% region1s.forEach(function(region) { %>
 
-                <div class="column">
-                    <strong>HK Island</strong>
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4"><%= region.Restaurant %></p>
-                                </div>
-                            </div>
-
-                            <div class="content">
-                                <%= region.Title %>
-                                <br>
-                                <div>Coins: <%= region.Coins %></div>
-                            </div>
+            <strong>HK Island</strong>
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <a href="../person/read/<%= region.id %>">
+                            <img src="<%= region.Image %>" alt="Placeholder image">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4"><%= region.Restaurant %></p>
                         </div>
                     </div>
-                </div>
-                <% }); %>
 
-                <% region2s.forEach(function(region) { %>
-
-                <div class="column">
-                    <strong>Kowloon</strong>
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4"><%= region.Restaurant %></p>
-                                </div>
-                            </div>
-
-                            <div class="content">
-                                <%= region.Title %>
-                                <br>
-                                <div>Coins: <%= region.Coins %></div>
-                            </div>
-                        </div>
+                    <div class="content">
+                        <%= region.Title %>
+                        <br>
+                        <div>Coins: <%= region.Coins %></div>
                     </div>
                 </div>
-                <% }); %>
+            </div>
+            <% }); %>
+        </div>
 
-                <% region3s.forEach(function(region) { %>
 
-                <div class="column">
-                    <strong>New Territories</strong>
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4"><%= region.Restaurant %></p>
-                                </div>
-                            </div>
+        <div class="column is-one-third">
+            <% region2s.forEach(function(region) { %>
 
-                            <div class="content">
-                                <%= region.Title %>
-                                <br>
-                                <div>Coins: <%= region.Coins %></div>
-                            </div>
+            <strong>Kowloon</strong>
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <a href="../person/read/<%= region.id %>">
+                            <img src="<%= region.Image %>" alt="Placeholder image">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4"><%= region.Restaurant %></p>
                         </div>
                     </div>
+
+                    <div class="content">
+                        <%= region.Title %>
+                        <br>
+                        <div>Coins: <%= region.Coins %></div>
+                    </div>
                 </div>
-                <% }); %>
+            </div>
+            <% }); %>
+        </div>
+
+
+
+        <div class="column is-one-third">
+            <% region3s.forEach(function(region) { %>
+
+
+            <strong>New Territories</strong>
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <a href="../person/read/<%= region.id %>">
+                            <img src="<%= region.Image %>" alt="Placeholder image">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4"><%= region.Restaurant %></p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <%= region.Title %>
+                        <br>
+                        <div>Coins: <%= region.Coins %></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+        <% }); %>
+    </div>
 
 </body>
 

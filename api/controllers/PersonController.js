@@ -11,18 +11,18 @@ module.exports = {
 
         var region1= await Person.find({ 
             where: {Region: "HK Island"}, 
-            sort: 'date'
+            sort: 'Experied_Date'
         });
         var region2= await Person.find({
             where: {Region: "Kowloon"}, 
-            sort: 'date'
+            sort: 'Experied_Date'
         });
         var region3= await Person.find({ 
             where: {Region: "New Territories"}, 
-            sort: 'date'
+            sort: 'Experied_Date'
         }); 
 
-        return res.view("person/list",{
+        return res.view("pages/homepage",{
             region1s: region1,
             region2s: region2,
             region3s: region3
@@ -36,15 +36,18 @@ module.exports = {
         return res.status(201).json({ id: person.id });
     },
 
+    //admin
+    admin: async function (req, res) {
+    var everyones = await Person.find();
+    return res.view("person/admin", { Coupons: everyones });
+  },
  
     // action - read
     read: async function (req, res) {
 
         var thatPerson = await Person.findOne(req.params.id);
 
-        if (!thatPerson) return res.notFound();
-
-        return res.view('person/read', { person: thatPerson });
+        return res.view('person/read', { Coupon: thatPerson });
     },
 
     // action - delete 
@@ -54,7 +57,7 @@ module.exports = {
 
         if (!deletedPerson) return res.notFound();
 
-        return res.ok();
+        return res.redirect("../admin");
     },
 
     // action - update
@@ -64,9 +67,7 @@ module.exports = {
 
             var thatPerson = await Person.findOne(req.params.id);
 
-            if (!thatPerson) return res.notFound();
-
-            return res.view('person/update', { person: thatPerson });
+            return res.view('person/update', { Coupon: thatPerson });
 
         } else {
 
@@ -74,7 +75,7 @@ module.exports = {
 
             if (!updatedPerson) return res.notFound();
 
-            return res.ok();
+            return res.redirect("../admin");
         }
     },
     // search  function

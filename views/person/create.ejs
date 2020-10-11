@@ -2,11 +2,10 @@
 
 <form action="/person/create" method="post">
 
-    <section class="section">
-        <dic class="container">
-            <div class="columns">
-                
-                <div class="column">
+
+            
+            <div class="columns">   
+                <div class="column is-half">
                     <div class="field">
                         <label class="label">Title</label>
                         <div class="control">
@@ -17,7 +16,7 @@
                     <div class="field">
                         <label class="label">Restaurant</label>
                         <div class="control">
-                            <input class="input" name="Restaurant" placeholder="name of restaurant" type="text">
+                            <input class="input" name="Restaurant" placeholder="name of restaurant" type="text" required>
 
 
                         </div>
@@ -27,13 +26,11 @@
                     <div class="field">
                         <dic class="container">
                             <div class="columns">
-
                                 <div class="column">
-
                                     <label class="label">Region</label>
                                     <div class="control">
                                         <div class="select">
-                                            <select name="Region">
+                                            <select name="Region" required>
                                                 <option value="HK Island">HK Island</option>
                                                 <option value="Kowloon">Kowloon</option>
                                                 <option value="New Territories">New Territories</option>
@@ -46,7 +43,7 @@
                                     <label class="label">Mall</label>
                                     <div class="control">
                                         <div class="select">
-                                            <select name="Mall">
+                                            <select name="Mall" required>
                                                 <option value="IFC Mall">IFC Mall</option>
                                                 <option value="Pacific Place">Pacific Place</option>
                                                 <option value="Times Square">Times Square</option>
@@ -61,21 +58,21 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
                         </dic>
                     </div>
 
                     <div class="field">
                         <label class="label">Image</label>
                         <div class="control">
-                            <input name="Image" class="input" placeholder="link"></input>
+                            <input name="Image" class="input" placeholder="link" required></input>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="column">
-
+                
+                <div class="column is-half">
                     <div class=field>
                         <div class="container">
                             <div class="columns">
@@ -83,14 +80,14 @@
                                 <div class="column">
                                     <label class="label">Quota</label>
                                     <div class="control">
-                                        <input name="Quota" class="input" type="number" placeholder="number">
+                                        <input name="Quota" class="input" type="number" placeholder="number" required>
                                     </div>
                                 </div>
 
                                 <div class="column">
                                     <label class="label">Coins</label>
                                     <div class="control">
-                                        <input name="Coins" class="input" type="number" placeholder="number">
+                                        <input name="Coins" class="input" type="number" placeholder="number" required>
                                     </div>
                                 </div>
 
@@ -101,7 +98,7 @@
                     <div class="field">
                         <label class="label">Experied Date</label>
                         <div class="control">
-                            <input name="Experied_Date" class="input" name="Detail" type="date" placeholder="date"></input>
+                            <input name="Experied_Date" class="input" name="Detail" type="date" placeholder="date" required></input>
                         </div>
                     </div>
 
@@ -128,8 +125,6 @@
                  </div>
 
             </div>
-        </dic>
-    </section>
 
 
 </form>

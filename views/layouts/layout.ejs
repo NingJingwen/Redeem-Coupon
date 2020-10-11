@@ -38,13 +38,62 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 </head>
 
-<section class="section">
-  <div class="container columns ">
-    <div class="column">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <img
+        src="https://thumbs.dreamstime.com/z/restaurant%E5%BE%BD%E6%A0%87%E9%A6%96%E5%AD%97%E6%AF%8Do%E6%A0%87%E8%AF%86%E4%B8%8Ehat-chef-restaurant%E5%BE%BD%E6%A0%87%E5%88%9B%E6%84%8F%E6%A6%82%E5%BF%B5%E5%8E%A8%E5%B8%88%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1-179259543.jpg"
+        width="112" height="28">
+    </a>
 
-      <%- body %>
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
 
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="http://localhost:1337">
+        Home
+      </a>
+
+      <a class="navbar-item" href="../../person/SearchandPaginate">
+        Search
+      </a>
+
+      <a class="navbar-item" href="http://localhost:1337/person/create">
+        Create
+      </a>
+
+      <a class="navbar-item" href="../../person/Admin">
+        Admin
+      </a>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+            </dic>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</nav>
+<br>
+<section class="section">
+  <div class="container">
+
+    <%- body %>
+
   </div>
 </section>
 
@@ -122,59 +171,6 @@
 <!--SCRIPTS END-->
 <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-<section>
-  <div class="container">
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <img
-            src="https://thumbs.dreamstime.com/z/restaurant%E5%BE%BD%E6%A0%87%E9%A6%96%E5%AD%97%E6%AF%8Do%E6%A0%87%E8%AF%86%E4%B8%8Ehat-chef-restaurant%E5%BE%BD%E6%A0%87%E5%88%9B%E6%84%8F%E6%A6%82%E5%BF%B5%E5%8E%A8%E5%B8%88%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1-179259543.jpg"
-            width="112" height="28">
-        </a>
-
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-          data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item" href="http://localhost:1337">
-            Home
-          </a>
-
-          <a class="navbar-item">
-            Search
-          </a>
-
-          <a class="navbar-item" href="http://localhost:1337/person/create">
-            Create
-          </a>
-
-          <a class="navbar-item">
-            Admin
-          </a>
-
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
-                </dic>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-</section>
 
 </body>
 
