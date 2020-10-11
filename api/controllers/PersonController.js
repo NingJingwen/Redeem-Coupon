@@ -22,12 +22,11 @@ module.exports = {
             sort: 'date'
         }); 
 
-        return res.json(region1)
-        // return res.view("person/list",{
-        //     region1s: region1,
-        //     region2s: region2,
-        //     region3s: region3
-        // });
+        return res.view("person/list",{
+            region1s: region1,
+            region2s: region2,
+            region3s: region3
+        });
     } ,
 
     // action - create
