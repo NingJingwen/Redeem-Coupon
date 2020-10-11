@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Caprice</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Caprice
+            </h1>
+            <p class="subtitle">
+                You deserve me!
+            </p>
+        </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+
+                <% region1s.forEach(function(region) { %>
+
+                <div class="column">
+                    <strong>HK Island</strong>
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4"><%= region.Restaurant %></p>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <%= region.Title %>
+                                <br>
+                                <div>Coins: <%= region.Coins %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+
+                <% region2s.forEach(function(region) { %>
+
+                <div class="column">
+                    <strong>Kowloon</strong>
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4"><%= region.Restaurant %></p>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <%= region.Title %>
+                                <br>
+                                <div>Coins: <%= region.Coins %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+
+                <% region3s.forEach(function(region) { %>
+
+                <div class="column">
+                    <strong>New Territories</strong>
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4"><%= region.Restaurant %></p>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <%= region.Title %>
+                                <br>
+                                <div>Coins: <%= region.Coins %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
