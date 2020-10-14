@@ -47,6 +47,6 @@ module.exports.routes = {
   'GET /person/update/:id': 'PersonController.update',
   'POST /person/update/:id': 'PersonController.update',
   
-  'GET /person/search': 'PersonController.search',
-  'GET /person/paginate': 'PersonController.paginate',
+  'GET /person/search': 'PersonController.searchandpaginate',
+  'GET /person/paginate': 'PersonController.searchandpaginate',
 };

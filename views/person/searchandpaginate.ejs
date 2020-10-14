@@ -1,7 +1,19 @@
 <!--search and paginate.ejs-->
+
+
+<h1 class="title">
+    Coupons
+</h1>
+<p class="subtitle">
+    You deserve me!
+</p>
+<hr>
+
+
+
 <div class="columns">
-    <div class="column is-two-third">
-        <% Coupons.forEach(function(Coupon) { %>
+    <% Coupons.forEach(function(Coupon) { %>
+    <div class="column is-one-third">
         <div class="card">
             <div class="card-image">
                 <figure class="image is-4by3">
@@ -24,9 +36,9 @@
                 </div>
             </div>
         </div>
-        <% }); %>
     </div>
 
+    <% }); %>
     <div class="column is-one-third">
         <form action="/person/search" method="GET">
             <div class="field">
@@ -35,7 +47,7 @@
                     <div class="select">
                         <select name="Region">
                             <option value=""">Not Specificed</option>
-                            <option value="HK Island">HK Island</option>
+                            <option value=" HK Island">HK Island</option>
                             <option value="Kowloon">Kowloon</option>
                             <option value="New Territories">New Territories</option>
                         </select>
@@ -51,7 +63,7 @@
             </div>
 
             <div class="field">
-                <label class="label">MaxC oins</label>
+                <label class="label">Max Coins</label>
                 <div class="control">
                     <input name="Max_Coins" class="input" type="number" placeholder="number">
                 </div>
@@ -60,7 +72,7 @@
             <div class="field">
                 <label class="label">Expired Date</label>
                 <div class="control">
-                    <input name="Expired_Date" class="input"  type="date" placeholder="date"></input>
+                    <input name="Expired_Date" class="input" type="date" placeholder="date"></input>
                 </div>
             </div>
 
@@ -70,7 +82,7 @@
                 </div>
                 <div class="control">
                     <button type="reset" class="button is-link is-light">
-                            Cancel
+                        Cancel
                     </button>
                 </div>
             </div>
@@ -120,7 +132,7 @@
 
         var numOfRecords = parseInt("<%= numOfRecords %>");
         var limit = 2;
-        var offset = 0;
+        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;;
 
         var baseUrl = "/person/paginate?limit=" + limit + "&offset=";
 

@@ -27,6 +27,12 @@ module.exports = {
     Coins: {
       type: "number"
     }, 
+    Min_Coins: {
+      type: "number"
+    },
+    Max_Coins: {
+      type: "number"
+    },
     Expired_Date: {
       type: 'string', columnType: 'date'
     },

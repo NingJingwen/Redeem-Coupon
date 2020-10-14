@@ -33,7 +33,7 @@ module.exports = {
     create: async function (req, res) {
         if (req.method == "GET") return res.view('person/create');
         var person = await Person.create(req.body).fetch();
-        return res.status(201).json({ id: person.id });
+        return res.status(201).redirect("http://localhost:1337")
     },
 
     //admin
@@ -79,42 +79,30 @@ module.exports = {
         }
     },
     // search  function
-    search: async function (req, res) {
+    searchandpaginate: async function (req, res) {
 
         var whereClause = {};
 
-        if (req.query.Region) whereClause.Region = { contains: req.query.Region };
+        if (req.query.Region) whereClause.Region =req.query.Region;
 
-        var parseMinCoins = parseInt(req.query.Min_Coins);
-        if (!isNaN(parseMinCoins)) whereClause.Min_Coins = { contains: parseMinCoins};
-        
-        var parseMaxCoins = parseInt(req.query.Max_Coins);
-        if (!isNaN(parseMaxCoins)) whereClause.Max_Coins = { contains: parseMaxCoins};
-        
-        if(req.query.Expired_Date) whereClause.Expired_Date={ contains: req.query.Expired_Date}
+        var parsedMinCoin = parseInt(req.query.Min_Coins);
+        var parsedMaxCoin = parseInt(req.query.Max_Coins);
+        if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
+          whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
+        } else if (!isNaN(parsedMinCoin)) {
+          whereClause.Coins = { ">=": parsedMinCoin };
+        } else if (!isNaN(parsedMaxCoin)) {
+          whereClause.Coins = { "<=": parsedMaxCoin };
+        }
 
-        retrivebetween(parseMinCoins,parseMaxCoins)
-
-
-        var thosePersons = await Person.find({
-            where: whereClause,
-            sort: 'Expired_Date'
-        });
-
-        var Coins=await Person.find();
-
-        var count = await Person.count();
-
-        return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
-    },
-
-    // action  -  paginate
-    paginate: async function (req, res) {
+        if(req.query.Expired_Date) whereClause.Expired_Date=req.query.Expired_Date;
 
         var limit=2;
         var offset=Math.max(req.query.offset,0)||0;
 
-        var somePersons = await Person.find({
+
+        var thosePersons = await Person.find({
+            where: whereClause,
             sort: 'Expired_Date',
             limit: limit,
             skip: offset
@@ -122,21 +110,23 @@ module.exports = {
 
         var count = await Person.count();
 
-        return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
+        return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
     },
+
+    // action  -  paginate
+//     paginate: async function (req, res) {
+
+//         var limit=2;
+//         var offset=Math.max(req.query.offset,0)||0;
+
+//         var somePersons = await Person.find({
+//             sort: 'Expired_Date',
+//             limit: limit,
+//             skip: offset
+//         });
+
+//         var count = await Person.count();
+
+//         return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
+//     },
 };
-
-<script>
-
-function retrivebetween(start,end) {
-    inter=await Person.find();
-    var each;
-    for (each in inter.Coins) {
-        if (each>start || each<end){
-            whereClause.Coins.insert(each);
-        }
-    }    
-}
-
-
-</script>
