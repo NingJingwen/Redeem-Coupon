@@ -11,15 +11,15 @@ module.exports = {
 
         var region1= await Person.find({ 
             where: {Region: "HK Island"}, 
-            sort: 'Experied_Date'
+            sort: 'Expired_Date'
         });
         var region2= await Person.find({
             where: {Region: "Kowloon"}, 
-            sort: 'Experied_Date'
+            sort: 'Expired_Date'
         });
         var region3= await Person.find({ 
             where: {Region: "New Territories"}, 
-            sort: 'Experied_Date'
+            sort: 'Expired_Date'
         }); 
 
         return res.view("pages/homepage",{
@@ -83,33 +83,60 @@ module.exports = {
 
         var whereClause = {};
 
-        if (req.query.name) whereClause.name = { contains: req.query.name };
+        if (req.query.Region) whereClause.Region = { contains: req.query.Region };
 
-        var parsedAge = parseInt(req.query.age);
-        if (!isNaN(parsedAge)) whereClause.age = parsedAge;
+        var parseMinCoins = parseInt(req.query.Min_Coins);
+        if (!isNaN(parseMinCoins)) whereClause.Min_Coins = { contains: parseMinCoins};
+        
+        var parseMaxCoins = parseInt(req.query.Max_Coins);
+        if (!isNaN(parseMaxCoins)) whereClause.Max_Coins = { contains: parseMaxCoins};
+        
+        if(req.query.Expired_Date) whereClause.Expired_Date={ contains: req.query.Expired_Date}
+
+        retrivebetween(parseMinCoins,parseMaxCoins)
+
 
         var thosePersons = await Person.find({
             where: whereClause,
-            sort: 'name'
+            sort: 'Expired_Date'
         });
 
-        return res.view('person/list', { persons: thosePersons });
+        var Coins=await Person.find();
+
+        var count = await Person.count();
+
+        return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
     },
 
     // action  -  paginate
     paginate: async function (req, res) {
 
-        var limit = Math.max(req.query.limit, 2) || 2;
-        var offset = Math.max(req.query.offset, 0) || 0;
+        var limit=2;
+        var offset=Math.max(req.query.offset,0)||0;
 
         var somePersons = await Person.find({
+            sort: 'Expired_Date',
             limit: limit,
             skip: offset
         });
 
         var count = await Person.count();
 
-        return res.view('person/paginate', { persons: somePersons, numOfRecords: count });
+        return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
     },
 };
 
+<script>
+
+function retrivebetween(start,end) {
+    inter=await Person.find();
+    var each;
+    for (each in inter.Coins) {
+        if (each>start || each<end){
+            whereClause.Coins.insert(each);
+        }
+    }    
+}
+
+
+</script>

@@ -27,7 +27,7 @@ module.exports = {
     Coins: {
       type: "number"
     }, 
-    Experied_Date: {
+    Expired_Date: {
       type: 'string', columnType: 'date'
     },
     Detail: {
