@@ -108,7 +108,9 @@ module.exports = {
             skip: offset
         });
 
-        var count = await Person.count();
+        var count = await Person.count(
+            {where: whereClause}
+        );
 
         return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
     },
