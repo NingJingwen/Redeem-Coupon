@@ -36,6 +36,13 @@
   <link rel="stylesheet" href="/styles/importer.css">
   <!--STYLES END-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+
+  <!-- <style>
+    .flex-item {
+      text-align: center;
+      width: 150px;
+    }
+  </style> -->
 </head>
 
 <body>
@@ -64,28 +71,33 @@
           Search
         </a>
 
-        <a class="navbar-item is-tab" href="http://localhost:1337/person/create">
+        <a class="navbar-item is-tab" id="Create" style="display: none" href="http://localhost:1337/person/create">
           Create
         </a>
 
-        <a class="navbar-item is-tab" href="../../person/Admin">
+        <a class="navbar-item is-tab" id="Admin" style="display: none" href="../../person/Admin">
           Admin
         </a>
+        <a class="navbar-item is-tab" id="MyRedeemedCoupons" style="display: none" href="../../person/MRC">
+          My Redeemed Coupons
+        </a>
       </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
-              </dic>
-            </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons" id="reset">
+            <a class="button is-primary">
+              <strong>
+                Sign Up
+              </strong>
+            </a>
+            </a>
+            <a class="button is-light" href='../user/login'>
+              Log in
+            </a>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </nav>
   <br>
@@ -170,6 +182,40 @@
   <script src="/dependencies/sails.io.js"></script>
   <!--SCRIPTS END-->
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script>
+
+    async function SetDisplay(){
+      var Req=new Request("/getsession",{method: "GET"});
+      await fetch(Req).then(function (response){
+        // session=response.json()
+        // return session
+        return response.json()
+      }).then(function (json) {
+        session=json.session
+        return session
+      })
+
+      if(session.role=='admin'){
+        Create.style.display="";
+        Admin.style.display="";
+        var reset=document.getElementById("reset");
+        var str1='<a class="navbar-item">Hi,' + session.username+'</a>';
+        var str2='<a class="button is-light" href="../user/logout">Log out</a>';
+        reset.innerHTML=str1+str2
+      } else if(session.role=="member"){
+        MyRedeemedCoupons.style.display="";
+        var reset=document.getElementById("reset");
+        var str1='<a class="navbar-item">Hi,' + session.username+'</a>';
+        var str2='<a class="button is-light" href="../user/logout">Log out</a>';
+        reset.innerHTML=str1+str2
+      }
+    }
+
+    SetDisplay();
+
+
+  </script>
 
 
 </body>

@@ -39,14 +39,25 @@ module.exports.routes = {
   'POST /person/create': 'PersonController.create',
 
   'GET /person/admin': 'PersonController.admin',
-  
+
 
   'GET /person/read/:id': 'PersonController.read',
-  'POST /person/delete/:id': 'PersonController.delete',
+  'DELETE /person/:id': 'PersonController.delete',
 
   'GET /person/update/:id': 'PersonController.update',
   'POST /person/update/:id': 'PersonController.update',
-  
+
   'GET /person/search': 'PersonController.searchandpaginate',
   'GET /person/paginate': 'PersonController.searchandpaginate',
+
+  'GET /getsession':'UserController.getSession',
+
+  'GET /user/login': 'UserController.login',
+  'POST /user/login': 'UserController.login',
+  'POST /user/logout': 'UserController.logout',
+
+  'GET /person/:id/coupons': 'PersonController.populate',
+  'GET /user/:id/members': 'UserController.populate',
+  'POST /user/:id/members/add/:fk': 'UserController.add',
+  'POST /user/:id/members/remove/:fk': 'UserController.remove',
 };

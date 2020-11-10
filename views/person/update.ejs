@@ -130,18 +130,39 @@
 
 </form>
 
-<form action="/person/delete/<%= Coupon.id %>" method="post">
+<!-- <form>
 
     <div class="field">
-        <div class="control">
-            <button class="button is-link" type="submit" style="background-color:red;">Delete</button>
-        </div>
+        <div class="control"> -->
+            <button class="button is-link" type="button" onclick="deleteCoupon('<%= Coupon.id %>')" style="background-color:red;">Delete</button>
+        <!-- </div>
     </div>
 
-</form>
+</form> -->
 
 
 <script>
+
+async function deleteCoupon(id) {
+        var r = confirm("Confirm Delete?");
+        
+        if (r) {
+            var response = await fetch("/person/" + id, {
+                method: "DELETE"
+            });
+
+            if (response.ok) {
+                alert("Coupon deleted.");
+                location.assign("/");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+
 </script>
 
 

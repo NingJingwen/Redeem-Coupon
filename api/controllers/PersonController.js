@@ -53,11 +53,14 @@ module.exports = {
     // action - delete 
     delete: async function (req, res) {
 
-        var deletedPerson = await Person.destroyOne(req.params.id);
+        await Person.destroyOne(req.params.id);
 
-        if (!deletedPerson) return res.notFound();
+        if (req.wantsJSON){
+            return res.status(204).send();	    // for ajax request
+        } else {
+            return res.redirect('/');			// for normal request
+        }
 
-        return res.redirect("../admin");
     },
 
     // action - update

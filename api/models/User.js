@@ -1,5 +1,5 @@
 /**
- * Person.js
+ * User.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -12,31 +12,16 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    title: {
-      type: "string"
+
+    username: {
+      type: "string",
+      unique: true,
+      required: true
+
+
     },
-    Restaurant: {
-      type: "string"
-    },
-    image: {
-      type: "string"
-    },
-    Quota: {
-      type: "number"
-    },
-    Coins: {
-      type: "number"
-    }, 
-    Min_Coins: {
-      type: "number"
-    },
-    Max_Coins: {
-      type: "number"
-    },
-    Expired_Date: {
-      type: 'string', columnType: 'date'
-    },
-    Detail: {
+    
+    password: {
       type: "string"
     },
 
@@ -49,10 +34,11 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    coupons: {
-      collection: 'User',
-      via: 'members'
-    },
+    members: {
+      collection: 'Person',
+      via: 'coupons'
+    }
+
   },
 
 };

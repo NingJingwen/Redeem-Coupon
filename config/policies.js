@@ -8,6 +8,8 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
+const { update } = require("../api/controllers/PersonController");
+
 module.exports.policies = {
 
   /***************************************************************************
@@ -18,5 +20,11 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+
+  PersonController: {
+    create: 'isAdmin',
+    update: 'isAdmin',
+    delete: 'isAdmin',
+  }
 
 };
