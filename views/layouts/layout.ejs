@@ -201,18 +201,40 @@
         Admin.style.display="";
         var reset=document.getElementById("reset");
         var str1='<a class="navbar-item">Hi,' + session.username+'</a>';
-        var str2='<a class="button is-light" href="../user/logout">Log out</a>';
+        var str2='<a class="button is-light" onclick="logout()">Log out</a>';
         reset.innerHTML=str1+str2
       } else if(session.role=="member"){
         MyRedeemedCoupons.style.display="";
         var reset=document.getElementById("reset");
         var str1='<a class="navbar-item">Hi,' + session.username+'</a>';
-        var str2='<a class="button is-light" href="../user/logout">Log out</a>';
+        var str2='<a class="button is-light" onclick="logout()">Log out</a>';
         reset.innerHTML=str1+str2
       }
     }
 
+    
+    async function logout() {
+        var r = confirm("Confirm Logout?");
+        
+        if (r) {
+            var response = await fetch("/user/logout", {
+                method: "GET"
+            });
+
+            if (response.ok) {
+                alert("User Logout.");
+                location.assign("/");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+
     SetDisplay();
+
 
 
   </script>

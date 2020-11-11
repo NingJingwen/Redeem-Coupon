@@ -24,8 +24,8 @@ module.exports = {
         // Reuse existing session 
         if (!req.session.username) {
             req.session.username = user.username;
-            req.session.coins=user.coins;
-            req.session.role=user.role;
+            req.session.coins = user.coins;
+            req.session.role = user.role;
             if (req.wantsJSON) {
                 return res.status(204).send()
 
@@ -41,8 +41,8 @@ module.exports = {
             if (err) return res.serverError(err);
 
             req.session.username = user.username;
-            req.session.coins=user.coins;
-            req.session.role=user.role;
+            req.session.coins = user.coins;
+            req.session.role = user.role;
             if (req.wantsJSON) {
                 return res.json(user);
             } else {
@@ -54,19 +54,22 @@ module.exports = {
     logout: async function (req, res) {
 
         req.session.destroy(function (err) {
-
+            
             if (err) return res.serverError(err);
-
-            return res.json(req.session.id);
+              
+            return res.status(204).send(); 
+            
         });
     },
+    
 
-    getSession: function (req,res){
-        if(!req.session){
+
+    getSession: function (req, res) {
+        if (!req.session) {
             return res.json('don\'t exist');
-        } else{
-            if (req.wantsJSON){
-                return res.json({session: req.session});
+        } else {
+            if (req.wantsJSON) {
+                return res.json({ session: req.session });
             }
         }
     }
