@@ -51,13 +51,15 @@ module.exports.routes = {
   'GET /person/paginate': 'PersonController.searchandpaginate',
 
   'GET /getsession':'UserController.getSession',
+  'GET /person/MyRedeemedCoupons': 'PersonController.MyRedeemedCoupons',
 
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',
   'GET /user/logout': 'UserController.logout',
+  
 
-  'GET /person/:id/coupons': 'PersonController.populate',
-  'GET /user/:id/members': 'UserController.populate',
-  'POST /user/:id/members/add/:fk': 'UserController.add',
-  'POST /user/:id/members/remove/:fk': 'UserController.remove',
+  'GET /person/:id/members': 'PersonController.populate',
+  'GET /user/:id/coupons': 'UserController.populate',
+  'GET /user/:id/coupons/add/:fk': 'UserController.add',
+  'GET /user/:id/coupons/remove/:fk': 'UserController.remove',
 };

@@ -24,6 +24,7 @@ module.exports = {
         // Reuse existing session 
         if (!req.session.username) {
             req.session.username = user.username;
+            req.session.personid = user.id;
             req.session.coins = user.coins;
             req.session.role = user.role;
             if (req.wantsJSON) {
@@ -43,6 +44,7 @@ module.exports = {
             req.session.username = user.username;
             req.session.coins = user.coins;
             req.session.role = user.role;
+            req.session.personid = user.id;
             if (req.wantsJSON) {
                 return res.json(user);
             } else {
@@ -54,14 +56,54 @@ module.exports = {
     logout: async function (req, res) {
 
         req.session.destroy(function (err) {
-            
+
             if (err) return res.serverError(err);
-              
-            return res.status(204).send(); 
-            
+
+            return res.status(204).send();
+
         });
     },
-    
+
+    populate: async function (req, res) {
+
+        var user = await User.findOne(req.params.id).populate("coupons");
+
+        if (!user) return res.notFound();
+
+        return res.json(user);
+    },
+
+    add: async function (req, res) {
+
+        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
+
+        var thatPerson = await Person.findOne(req.params.fk).populate("members", { id: req.params.id });
+
+        if (!thatPerson) return res.status(404).json("Coupon not found.");
+
+        if (thatPerson.members.length > 0)
+            return res.status(409).json("Already added.");   // conflict
+
+        await User.addToCollection(req.params.id, "coupons").members(req.params.fk);
+
+        return res.ok();
+    },
+    remove: async function (req, res) {
+
+        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
+
+        var thatPerson = await Person.findOne(req.params.fk).populate("coupons", { id: req.params.id });
+
+        if (!thatPerson) return res.status(404).json("Coupon not found.");
+
+        if (thatPerson.coupons.length == 0)
+            return res.status(409).json("Nothing to delete.");    // conflict
+
+        await User.removeFromCollection(req.params.id, "members").members(req.params.fk);
+
+        return res.ok();
+    },
+
 
 
     getSession: function (req, res) {

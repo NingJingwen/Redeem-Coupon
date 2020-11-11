@@ -63,13 +63,11 @@ module.exports.bootstrap = async function () {
     const L = await Person.findOne({ Restaurant: "L'Atelier de Joël Robuchon" });
     const LKH = await Person.findOne({ Restaurant: "Lung King Heen" });
     const MB = await Person.findOne({ Restaurant: "8 ½ Otto e Mezzo - Bombana" });
-    const admin = await User.findOne({ username: "admin" });
     const Ricardo = await User.findOne({ username: "Ricardo" });
     const Martin = await User.findOne({ username: "Martin" });
 
-    await User.addToCollection(admin.id, 'members').members([BI.id, L.id, LKH.id, MB.id]);
-    await User.addToCollection(Ricardo.id, 'members').members([BI.id, L.id]);
-    await User.addToCollection(Martin.id, 'members').members([BI.id, L.id]);
+    await User.addToCollection(Ricardo.id, 'coupons').members([BI.id, L.id]);
+    await User.addToCollection(Martin.id, 'coupons').members([LKH.id, L.id]);
   }
 
 };

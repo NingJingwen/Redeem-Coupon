@@ -14,8 +14,9 @@
                     <li><strong>Coins: </strong><%= Coupon.Coins %></li>
                     <li><strong>Address: </strong><%= Coupon.Region %>, <%= Coupon.Mall %></li>
                     <li><strong>Expired_Date: </strong><%= Coupon.Expired_Date %></li>
-                    <li><%= Coupon.Detail %></li>
+                    <li><%= Coupon.details %></li>
                 </ul>
+                <a type="button" href="http://localhost:1337/user/<%= Userid %>/coupons/add/<%= Coupon.id %>">Redeem</a>
             </div>
 
         </div>

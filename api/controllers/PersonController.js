@@ -7,27 +7,27 @@
 
 module.exports = {
     // display-filtering
-    homepage: async function(req,res){
+    homepage: async function (req, res) {
 
-        var region1= await Person.find({ 
-            where: {Region: "HK Island"}, 
+        var region1 = await Person.find({
+            where: { Region: "HK Island" },
             sort: 'Expired_Date'
         });
-        var region2= await Person.find({
-            where: {Region: "Kowloon"}, 
+        var region2 = await Person.find({
+            where: { Region: "Kowloon" },
             sort: 'Expired_Date'
         });
-        var region3= await Person.find({ 
-            where: {Region: "New Territories"}, 
+        var region3 = await Person.find({
+            where: { Region: "New Territories" },
             sort: 'Expired_Date'
-        }); 
+        });
 
-        return res.view("pages/homepage",{
+        return res.view("pages/homepage", {
             region1s: region1,
             region2s: region2,
             region3s: region3
         });
-    } ,
+    },
 
     // action - create
     create: async function (req, res) {
@@ -38,16 +38,17 @@ module.exports = {
 
     //admin
     admin: async function (req, res) {
-    var everyones = await Person.find();
-    return res.view("person/admin", { Coupons: everyones });
-  },
- 
+        var everyones = await Person.find();
+        return res.view("person/admin", { Coupons: everyones });
+    },
+
     // action - read
     read: async function (req, res) {
 
         var thatPerson = await Person.findOne(req.params.id);
+        var thatid = req.session.personid
 
-        return res.view('person/read', { Coupon: thatPerson });
+        return res.view('person/read', { Coupon: thatPerson, Userid: thatid });
     },
 
     // action - delete 
@@ -55,7 +56,7 @@ module.exports = {
 
         await Person.destroyOne(req.params.id);
 
-        if (req.wantsJSON){
+        if (req.wantsJSON) {
             return res.status(204).send();	    // for ajax request
         } else {
             return res.redirect('/');			// for normal request
@@ -86,22 +87,22 @@ module.exports = {
 
         var whereClause = {};
 
-        if (req.query.Region) whereClause.Region =req.query.Region;
+        if (req.query.Region) whereClause.Region = req.query.Region;
 
         var parsedMinCoin = parseInt(req.query.Min_Coins);
         var parsedMaxCoin = parseInt(req.query.Max_Coins);
         if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
-          whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
+            whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
         } else if (!isNaN(parsedMinCoin)) {
-          whereClause.Coins = { ">=": parsedMinCoin };
+            whereClause.Coins = { ">=": parsedMinCoin };
         } else if (!isNaN(parsedMaxCoin)) {
-          whereClause.Coins = { "<=": parsedMaxCoin };
+            whereClause.Coins = { "<=": parsedMaxCoin };
         }
 
-        if(req.query.Expired_Date) whereClause.Expired_Date=req.query.Expired_Date;
+        if (req.query.Expired_Date) whereClause.Expired_Date = req.query.Expired_Date;
 
-        var limit=2;
-        var offset=Math.max(req.query.offset,0)||0;
+        var limit = 2;
+        var offset = Math.max(req.query.offset, 0) || 0;
 
 
         var thosePersons = await Person.find({
@@ -112,26 +113,48 @@ module.exports = {
         });
 
         var count = await Person.count(
-            {where: whereClause}
+            { where: whereClause }
         );
 
         return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
     },
 
+    populate: async function (req, res) {
+
+        var person = await Person.findOne(req.params.id).populate("members");
+
+        if (!person) return res.notFound();
+
+        return res.json(person);
+    },
+
     // action  -  paginate
-//     paginate: async function (req, res) {
+    //     paginate: async function (req, res) {
 
-//         var limit=2;
-//         var offset=Math.max(req.query.offset,0)||0;
+    //         var limit=2;
+    //         var offset=Math.max(req.query.offset,0)||0;
 
-//         var somePersons = await Person.find({
-//             sort: 'Expired_Date',
-//             limit: limit,
-//             skip: offset
-//         });
+    //         var somePersons = await Person.find({
+    //             sort: 'Expired_Date',
+    //             limit: limit,
+    //             skip: offset
+    //         });
 
-//         var count = await Person.count();
+    //         var count = await Person.count();
 
-//         return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
-//     },
-};
+    //         return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
+    //     },
+
+    //MyRedeemedCoupons
+    MyRedeemedCoupons: async function (req, res) {
+
+        var thatPersons = await User.find(req.session.personid).populate("coupons")
+        var thatCoupons = thatPersons.coupons
+
+        var thatUser = await User.findOne(req.session.personid);
+
+        return res.view('/person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
+
+
+    },
+}
