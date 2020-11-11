@@ -148,12 +148,11 @@ module.exports = {
     //MyRedeemedCoupons
     MyRedeemedCoupons: async function (req, res) {
 
-        var thatPersons = await User.find(req.session.personid).populate("coupons")
-        var thatCoupons = thatPersons.coupons
+        var thatCoupons = await User.findOne(req.session.personid).populate('coupons');
 
         var thatUser = await User.findOne(req.session.personid);
 
-        return res.view('/person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
+        return res.view('person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
 
 
     },
