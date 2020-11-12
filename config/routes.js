@@ -55,11 +55,11 @@ module.exports.routes = {
 
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',
-  'GET /user/logout': 'UserController.logout',
+  'POST /user/logout': 'UserController.logout',
   
 
   'GET /person/:id/members': 'PersonController.populate',
   'GET /user/:id/coupons': 'UserController.populate',
-  'GET /user/:id/coupons/add/:fk': 'UserController.add',
-  'GET /user/:id/coupons/remove/:fk': 'UserController.remove',
+  'POST /user/:id/coupons/add/:fk': 'UserController.add',
+  'POST /user/:id/coupons/remove/:fk': 'UserController.remove',
 };

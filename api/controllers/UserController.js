@@ -82,8 +82,8 @@ module.exports = {
         if (!thatPerson) return res.status(404).json("Coupon not found.");
 
         if (thatPerson.members.length > 0)
-            return res.status(409).json("Already added.");   // conflict
-
+            return res.json({length:thatPerson.members.length});   // conflict
+            
         await User.addToCollection(req.params.id, "coupons").members(req.params.fk);
 
         return res.ok();
@@ -92,14 +92,14 @@ module.exports = {
 
         if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
 
-        var thatPerson = await Person.findOne(req.params.fk).populate("coupons", { id: req.params.id });
+        var thatPerson = await Person.findOne(req.params.fk).populate("members", { id: req.params.id });
 
         if (!thatPerson) return res.status(404).json("Coupon not found.");
 
-        if (thatPerson.coupons.length == 0)
+        if (thatPerson.members.length == 0)
             return res.status(409).json("Nothing to delete.");    // conflict
 
-        await User.removeFromCollection(req.params.id, "members").members(req.params.fk);
+        await User.removeFromCollection(req.params.id, "coupons").members(req.params.fk);
 
         return res.ok();
     },

@@ -25,6 +25,13 @@ module.exports = {
       type: "string"
     },
 
+    coins: {
+      type: "number"
+    },
+    role: {
+      type: "string"
+    },
+
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

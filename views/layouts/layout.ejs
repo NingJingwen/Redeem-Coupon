@@ -188,8 +188,6 @@
     async function SetDisplay(){
       var Req=new Request("/getsession",{method: "GET"});
       await fetch(Req).then(function (response){
-        // session=response.json()
-        // return session
         return response.json()
       }).then(function (json) {
         session=json.session
@@ -218,7 +216,7 @@
         
         if (r) {
             var response = await fetch("/user/logout", {
-                method: "GET"
+                method: "POST"
             });
 
             if (response.ok) {

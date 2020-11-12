@@ -12,13 +12,13 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    title: {
+    Title: {
       type: "string"
     },
     Restaurant: {
       type: "string"
     },
-    image: {
+    Image: {
       type: "string"
     },
     Quota: {
