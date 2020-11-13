@@ -1,0 +1,26 @@
+<h1 class="title">
+    Coupons
+</h1>
+<p class="subtitle">
+    You deserve me!
+</p>
+<hr>
+
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    <caption style="font-size:30px;font-weight: bold;text-align:justify;">Member List</caption>
+    <tr>
+        <th>ID</th>
+        <th>USERNAME</th>
+        <th>BALANCE</th>
+    </tr>
+
+    <% Users.forEach( function(User) { %>
+
+    <tr>
+        <td><%= User.id %></td>
+        <td><%= User.username %></td>
+        <td><%= User.coins %></td>
+    </tr>
+
+    <% }); %>
+</table>

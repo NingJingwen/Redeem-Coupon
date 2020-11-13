@@ -8,15 +8,15 @@
 
     <div class="column is-half">
         <ul>
-            <li><strong><%= Coupon.restaurant %></strong></li>
-            <li><strong><%= Coupon.title %></strong></li>
+            <li><strong><%= Coupon.Restaurant %></strong></li>
+            <li><strong><%= Coupon.Title %></strong></li>
             <li><strong>Coins: </strong><%= Coupon.Coins %></li>
             <li><strong>Address: </strong><%= Coupon.Region %>, <%= Coupon.Mall %></li>
             <li><strong>Expired_Date: </strong><%= Coupon.Expired_Date %></li>
-            <li><%= Coupon.details %></li>
+            <li><%= Coupon.Details %></li>
         </ul>
-        <% if(Length==0){%>
-        <button type="button" id="Redeem" style="background-color:green;" onclick="redeem('<%= Userid %>','<%= Coupon.id %>')">Redeem</button>
+        <% if(Length==0 & Role =="member"){%>
+        <button type="button" id="Redeem" style="background-color:green;" onclick="redeem('<%= User.id %>','<%= Coupon.id %>')">Redeem</button>
         <% } %>
     </div>
 
@@ -38,7 +38,10 @@
                 var Redeem = document.getElementById("Redeem");
                 Redeem.style.display = "none";
                 location.assign("/");
-            } else {
+            } else if(response.status == 404) {
+                    var msg = await response.json();
+                    alert(msg);
+            } else{
                 alert(response.status + ": " + response.statusText);
             }
 

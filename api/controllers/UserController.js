@@ -5,6 +5,10 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+// const Person = require("../models/Person");
+
+
+
 module.exports = {
     // login users
     login: async function (req, res) {
@@ -64,15 +68,6 @@ module.exports = {
         });
     },
 
-    populate: async function (req, res) {
-
-        var user = await User.findOne(req.params.id).populate("coupons");
-
-        if (!user) return res.notFound();
-
-        return res.json(user);
-    },
-
     add: async function (req, res) {
 
         if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
@@ -82,29 +77,33 @@ module.exports = {
         if (!thatPerson) return res.status(404).json("Coupon not found.");
 
         if (thatPerson.members.length > 0)
-            return res.json({length:thatPerson.members.length});   // conflict
-            
-        await User.addToCollection(req.params.id, "coupons").members(req.params.fk);
+            return res.json("Already added!");   // conflict
 
-        return res.ok();
+        var Couponcoins=await Person.findOne(req.params.fk)
+        var Usercoins=await User.findOne(req.params.id)
+        Couponcoins=Couponcoins.Coins
+        Usercoins=Usercoins.coins
+        Couponquota=Couponcoins.Quota
+
+        if(Usercoins<Couponcoins) {
+            return res.status(404).json("Insufficient Coins！")
+        } else {
+            Newcoins=Usercoins-Couponcoins;
+            Newquota=Couponquota-1;
+            await Person.updateOne(req.params.fk).set({'Quota': Newquota});
+            await User.addToCollection(req.params.id, "coupons").members(req.params.fk);
+            await User.updateOne(req.params.id).set({'coins': Newcoins});
+            return res.ok();
+        }
     },
-    remove: async function (req, res) {
-
-        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
-
-        var thatPerson = await Person.findOne(req.params.fk).populate("members", { id: req.params.id });
-
-        if (!thatPerson) return res.status(404).json("Coupon not found.");
-
-        if (thatPerson.members.length == 0)
-            return res.status(409).json("Nothing to delete.");    // conflict
-
-        await User.removeFromCollection(req.params.id, "coupons").members(req.params.fk);
-
-        return res.ok();
+    
+    json: async function(req,res){
+        // var that=await User.findOne({username:'Ricardo'})
+        var that=await Person.findOne({Coins:50})
+        Quota=that.Quota-1
+        await Person.updateOne({'Coins': 50}).set({'Quota': Quota})
+        return res.json(Quota);
     },
-
-
 
     getSession: function (req, res) {
         if (!req.session) {
@@ -112,8 +111,14 @@ module.exports = {
         } else {
             if (req.wantsJSON) {
                 return res.json({ session: req.session });
+
             }
         }
-    }
+    },
+
+
 };
+
+
+
 

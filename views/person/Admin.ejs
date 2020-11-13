@@ -19,7 +19,9 @@
             <th>ID</th>
             <th>Title</th>
             <th>Restaurant</th>
+            <th>Quota</th>
             <th>Expired Date</th>
+            <th></th>
             <th></th>
         </tr>
         
@@ -29,8 +31,10 @@
             <td><%= Coupon.id %></td>
             <td><%= Coupon.Title %></td>
             <td><%= Coupon.Restaurant %></td>
+            <td><%= Coupon.Quota %></td>
             <td><%= Coupon.Expired_Date  %></td>
             <td><a href="update/<%= Coupon.id %>"> Update </a></td>
+            <td><a href="<%= Coupon.id %>/members"> Redeemed Members </a></td>
         </tr>
         
         <% }); %>

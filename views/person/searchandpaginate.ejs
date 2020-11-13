@@ -162,6 +162,10 @@
             nextButton.href = "";
             nextLink.style.display = "none";
         }
+        if(numOfRecords<=2){
+            firstLink.href="";
+            lastLink.href="";
+        }
     }
 
     setPagination();

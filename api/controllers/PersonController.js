@@ -46,12 +46,16 @@ module.exports = {
     read: async function (req, res) {
 
         var thatPerson = await Person.findOne(req.params.id);
-        var thatid = req.session.personid
+        length=0
+        if(req.session.personid){
         var thatlength = await User.findOne(req.session.personid).populate("coupons", { id: req.params.id });
         var length=thatlength.coupons.length
+        var thatUser= await User.findOne(req.session.personid)
+        }
+        var thatrole=req.session.role
 
 
-        return res.view('person/read', { Coupon: thatPerson, Userid: thatid, Length:length });
+        return res.view('person/read', { Coupon: thatPerson, User: thatUser, Length:length ,Role:thatrole});
     },
 
     // action - delete 
@@ -141,7 +145,7 @@ module.exports = {
     //     },
 
     //MyRedeemedCoupons
-    MyRedeemedCoupons: async function (req, res) {
+    populatecoupons: async function (req, res) {
 
         var allCoupons = await User.findOne(req.session.personid).populate('coupons');
         if (!allCoupons) return res.notFound();
@@ -152,4 +156,11 @@ module.exports = {
 
 
     },
+
+    populatemembers: async function(req,res) {
+        var allMembers = await Person.findOne(req.params.id).populate('members');
+        thatMembers=allMembers.members
+        
+        return res.view('person/RedeemedMember',{ Users: thatMembers});
+    }
 }
