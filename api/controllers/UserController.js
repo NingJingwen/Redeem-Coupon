@@ -83,11 +83,12 @@ module.exports = {
         var Usercoins=await User.findOne(req.params.id)
         Couponcoins=Couponcoins.Coins
         Usercoins=Usercoins.coins
-        Couponquota=Couponcoins.Quota
 
         if(Usercoins<Couponcoins) {
             return res.status(404).json("Insufficient Coins！")
         } else {
+            var Couponquota=await Person.findOne(req.params.fk)
+            Couponquota=Couponquota.Quota
             Newcoins=Usercoins-Couponcoins;
             Newquota=Couponquota-1;
             await Person.updateOne(req.params.fk).set({'Quota': Newquota});
@@ -96,7 +97,7 @@ module.exports = {
             return res.ok();
         }
     },
-    
+
     json: async function(req,res){
         // var that=await User.findOne({username:'Ricardo'})
         var that=await Person.findOne({Coins:50})
