@@ -46,16 +46,16 @@ module.exports = {
     read: async function (req, res) {
 
         var thatPerson = await Person.findOne(req.params.id);
-        length=0
-        if(req.session.personid){
-        var thatlength = await User.findOne(req.session.personid).populate("coupons", { id: req.params.id });
-        var length=thatlength.coupons.length
-        var thatUser= await User.findOne(req.session.personid)
+        length = 0
+        if (req.session.personid) {
+            var thatlength = await User.findOne(req.session.personid).populate("coupons", { id: req.params.id });
+            var length = thatlength.coupons.length
+            var thatUser = await User.findOne(req.session.personid)
         }
-        var thatrole=req.session.role
+        var thatrole = req.session.role
 
 
-        return res.view('person/read', { Coupon: thatPerson, User: thatUser, Length:length ,Role:thatrole});
+        return res.view('person/read', { Coupon: thatPerson, User: thatUser, Length: length, Role: thatrole });
     },
 
     // action - delete 
@@ -127,6 +127,48 @@ module.exports = {
     },
 
 
+    // search  function
+    aginate: async function (req, res) {
+
+        if (req.wantsJSON) {
+
+            var whereClause = {};
+
+            if (req.query.Region) whereClause.Region = req.query.Region;
+
+            var parsedMinCoin = parseInt(req.query.Min_Coins);
+            var parsedMaxCoin = parseInt(req.query.Max_Coins);
+            if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
+                whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
+            } else if (!isNaN(parsedMinCoin)) {
+                whereClause.Coins = { ">=": parsedMinCoin };
+            } else if (!isNaN(parsedMaxCoin)) {
+                whereClause.Coins = { "<=": parsedMaxCoin };
+            }
+
+            if (req.query.Expired_Date) whereClause.Expired_Date = req.query.Expired_Date;
+
+            var limit = 2;
+            var offset = Math.max(req.query.offset, 0) || 0;
+            var thosePersons = await Person.find({
+                where: whereClause,
+                sort: 'Expired_Date',
+                limit: limit,
+                skip: offset
+            });
+
+            return res.json(thosePersons);
+
+        } else {
+            
+            var count = await Person.count(
+                { where: whereClause }
+            );
+
+            return res.view('person/aginate', { numOfRecords: count });
+        }
+    },
+
     // action  -  paginate
     //     paginate: async function (req, res) {
 
@@ -149,7 +191,7 @@ module.exports = {
 
         var allCoupons = await User.findOne(req.session.personid).populate('coupons');
         if (!allCoupons) return res.notFound();
-        thatCoupons=allCoupons.coupons
+        thatCoupons = allCoupons.coupons
         var thatUser = await User.findOne(req.session.personid);
 
         return res.view('person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
@@ -157,10 +199,10 @@ module.exports = {
 
     },
 
-    populatemembers: async function(req,res) {
+    populatemembers: async function (req, res) {
         var allMembers = await Person.findOne(req.params.id).populate('members');
-        thatMembers=allMembers.members
-        
-        return res.view('person/RedeemedMember',{ Users: thatMembers});
+        thatMembers = allMembers.members
+
+        return res.view('person/RedeemedMember', { Users: thatMembers });
     }
 }

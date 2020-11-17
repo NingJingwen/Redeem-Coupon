@@ -1,4 +1,4 @@
-<!-- search and paginate.ejs-->
+<!--search and paginate.ejs-->
 
 
 <h1 class="title">
@@ -11,36 +11,11 @@
 
 
 
-<div class="columns">
-    <% Coupons.forEach(function(Coupon) { %>
-    <div class="column is-one-third">
-        <div class="card">
-            <div class="card-image">
-                <figure class="image is-4by3">
-                    <a href="../person/read/<%= Coupon.id %>">
-                        <img src="<%= Coupon.Image %>" alt="Placeholder image">
-                    </a>
-                </figure>
-            </div>
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-content">
-                        <p class="title is-4"><%= Coupon.Restaurant %></p>
-                    </div>
-                </div>
-
-                <div class="content">
-                    <%= Coupon.Title %>
-                    <br>
-                    <div>Coins: <%= Coupon.Coins %></div>
-                </div>
-            </div>
-        </div>
+<div  class="columns">
+    <div id="SearchedCoupons" class="column is-one-third">   
     </div>
 
-    <% }); %>
     <div class="column is-one-third">
-        <form action="/person/search" method="GET">
             <div class="field">
                 <label class="label">Region</label>
                 <div class="control">
@@ -78,7 +53,7 @@
 
             <div class="field is-grouped">
                 <div class="control">
-                    <button type="submit" class="button is-link">Submit</button>
+                    <button type="button" class="button is-link" onclick="fetchPage(2,0)">Submit</button>
                 </div>
                 <div class="control">
                     <button type="reset" class="button is-link is-light">
@@ -86,8 +61,6 @@
                     </button>
                 </div>
             </div>
-
-        </form>
     </div>
 </div>
 
@@ -120,7 +93,7 @@
 </nav>
 
 <script>
-    function setPagination() {
+    function setPagination(limit,offset) {
 
         var previousButton = document.getElementById("previousButton");
         var nextButton = document.getElementById("nextButton");
@@ -131,18 +104,25 @@
         var lastLink = document.getElementById("lastLink");
 
         var numOfRecords = parseInt("<%= numOfRecords %>");
-        var limit = 2;
-        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;;
+        // var limit = 2;
+        // var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;;
 
-        var baseUrl = "/person/paginate?limit=" + limit + "&offset=";
+        var baseUrl = "/person/aginate?limit=" + limit + "&offset=";
 
-        firstLink.href = baseUrl + 0;
-        previousButton.href = baseUrl + (offset - limit);
-        previousLink.href = baseUrl + (offset - limit);
-        currentLink.href = baseUrl + offset;
-        nextLink.href = baseUrl + (offset + limit);
-        nextButton.href = baseUrl + (offset + limit);
-        lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+        // firstLink.href = baseUrl + 0;
+        // previousButton.href = baseUrl + (offset - limit);
+        // previousLink.href = baseUrl + (offset - limit);
+        // currentLink.href = baseUrl + offset;
+        // nextLink.href = baseUrl + (offset + limit);
+        // nextButton.href = baseUrl + (offset + limit);
+        // lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+        firstLink.onclick=function() { fetchPage(limit, 0);}
+        previousButton.onclick=function() { fetchPage(limit, offset-limit);}
+        previousLink.onclick=function() { fetchPage(limit, offset-limite);}
+        currentLink.onclick = function() { fetchPage(limit, offset);}
+        nextLink.onclick = function() { fetchPage(limit, offset + limit);}
+        nextButton.onclick = function() { fetchPage(limit, offset + limit);}
+        lastLink.onclick = function() {fetchPage(limit,(Math.ceil(numOfRecords / limit) - 1) * limit); }
 
         var currentPageNumber = Math.floor(offset / limit) + 1;
 
@@ -155,19 +135,57 @@
             previousButton.setAttribute("disabled", true);
             previousButton.href = "";
             previousLink.style.display = "none";
+        }else {
+            previousButton.removeAttribute("disabled");
+            previousLink.style.display="block";
         }
 
         if (offset + limit >= numOfRecords) {
             nextButton.setAttribute("disabled", true);
             nextButton.href = "";
             nextLink.style.display = "none";
+        }else{
+            nextButton.removeAttribute("disabled");
+            nextLink.style.display="block";
         }
         if(numOfRecords<=2){
             firstLink.href="";
             lastLink.href="";
         }
-    }
+    };
 
     setPagination();
+
+</script>
+
+<script>
+    async function fetchPage(limit,offset) {
+
+        var response = await fetch("/person/aginate?limit=" + limit + "&offset=" + offset);
+
+
+        if (response.ok) {
+            var coupons = await response.json();
+
+            coupons.forEach(function (coupon) {
+                // dynamicCode += "<tr><td>" + person.name + "</td><td>" + person.age + "</td></tr>";
+                string1='<div class="card"><div class="card-image"><figure class="image is-4by3">'
+                string2='<a href="../person/read/'+ coupon.id+ '><img src="'+ coupon.Image+'" alt="Placeholder image"></a></figure></div>'
+                string3='<div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+coupon.Restaurant+'</p></div></div>'
+                string4='<div class="content">'+coupon.Title+'<br><div>Coins:'+coupon.Coins+'</div></div></div></div>'
+                dynamicCode+=string1+string2+string3+string4
+            });
+
+            document.querySelector("#SearchedCoupons").innerHTML = dynamicCode;
+            setPagination(limit, offset);
+        } else {
+            alert(response.status + ": " + response.statusText)
+        }
+    };
+
+    fetchPage(2,0);
+
+
+
 
 </script>
