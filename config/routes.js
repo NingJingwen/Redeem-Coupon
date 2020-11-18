@@ -49,7 +49,7 @@ module.exports.routes = {
 
   // 'GET /person/search': 'PersonController.searchandpaginate',
   // 'GET /person/paginate': 'PersonController.searchandpaginate',
-  'POST /person/search': 'PersonController.search',
+  'POST /person/aginate': 'PersonController.aginate',
   'GET /person/aginate': 'PersonController.aginate',
 
   'GET /getsession':'UserController.getSession',

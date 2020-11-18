@@ -11,15 +11,15 @@
 
 
 
-<div  class="columns">
+<div class="columns">
     <div class="column is-two-third">
         <div class="container">
             <div id="SearchedCoupons" class="columns">
             </div>
         </div>
     </div>
-    <div class="column is-one-third"> 
-        <form action="/person/search" method="POST" onsubmit="submitForm(this);return false">       
+    <div class="column is-one-third">
+        <form action="/person/aginate" method="POST" onsubmit="submitForm(this);return false">
             <div class="field">
                 <label class="label">Region</label>
                 <div class="control">
@@ -97,7 +97,7 @@
 </nav>
 
 <script>
-    function setPagination(limit,offset) {
+    function setPagination(limit, offset,newcount) {
 
         var previousButton = document.getElementById("previousButton");
         var nextButton = document.getElementById("nextButton");
@@ -106,8 +106,11 @@
         var nextLink = document.getElementById("nextLink");
         var firstLink = document.getElementById("firstLink");
         var lastLink = document.getElementById("lastLink");
-
+        if(isNaN(newcount)){
         var numOfRecords = parseInt("<%= numOfRecords %>");
+        }else{
+        var numOfRecords=newcount;
+        };
         // var limit = 2;
         // var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;;
 
@@ -120,13 +123,13 @@
         // nextLink.href = baseUrl + (offset + limit);
         // nextButton.href = baseUrl + (offset + limit);
         // lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
-        firstLink.onclick=function() { fetchPage(limit, 0);}
-        previousButton.onclick=function() { fetchPage(limit, offset-limit);}
-        previousLink.onclick=function() { fetchPage(limit, offset-limit);}
-        currentLink.onclick = function() { fetchPage(limit, offset);}
-        nextLink.onclick = function() { fetchPage(limit, offset + limit);}
-        nextButton.onclick = function() { fetchPage(limit, offset + limit);}
-        lastLink.onclick = function() {fetchPage(limit,(Math.ceil(numOfRecords / limit) - 1) * limit); }
+        firstLink.onclick = function () { fetchPage(limit, 0,newcount); }
+        previousButton.onclick = function () { fetchPage(limit, offset - limit,newcount); }
+        previousLink.onclick = function () { fetchPage(limit, offset - limit,newcount); }
+        currentLink.onclick = function () { fetchPage(limit, offset,newcount); }
+        nextLink.onclick = function () { fetchPage(limit, offset + limit,newcount); }
+        nextButton.onclick = function () { fetchPage(limit, offset + limit,newcount); }
+        lastLink.onclick = function () { fetchPage(limit, (Math.ceil(numOfRecords / limit) - 1) * limit,newcount); }
 
         var currentPageNumber = Math.floor(offset / limit) + 1;
 
@@ -139,31 +142,31 @@
             previousButton.setAttribute("disabled", true);
             previousButton.href = "";
             previousLink.style.display = "none";
-        }else {
+        } else {
             previousButton.removeAttribute("disabled");
-            previousLink.style.display="block";
+            previousLink.style.display = "block";
         }
 
         if (offset + limit >= numOfRecords) {
             nextButton.setAttribute("disabled", true);
             nextButton.href = "";
             nextLink.style.display = "none";
-        }else{
+        } else {
             nextButton.removeAttribute("disabled");
-            nextLink.style.display="block";
+            nextLink.style.display = "block";
         }
-        if(numOfRecords<=2){
-            firstLink.href="";
-            lastLink.href="";
+        if (numOfRecords <= 2) {
+            firstLink.onclick = "";
+            lastLink.onclick = "";
         }
     };
 
-    setPagination();
+    // setPagination()
 
 </script>
 
 <script>
-    async function fetchPage(limit,offset) {
+    async function fetchPage(limit, offset,newcount) {
 
         var response = await fetch("/person/aginate?limit=" + limit + "&offset=" + offset);
 
@@ -171,26 +174,26 @@
         if (response.ok) {
             var coupons = await response.json();
 
-            var dynamicCode="";
+            var dynamicCode = "";
 
 
-            coupons.forEach(function (coupon) {
+            coupons.data.forEach(function (coupon) {
                 // dynamicCode += "<tr><td>" + person.name + "</td><td>" + person.age + "</td></tr>";
-                string1='<div class="column is-half"><div class="card"><div class="card-image"><figure class="image is-4by3">'
-                string2='<a href="../person/read/'+ coupon.id+ '"><img src="'+ coupon.Image+'" alt="Placeholder image"></a></figure></div>'
-                string3='<div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+coupon.Restaurant+'</p></div></div>'
-                string4='<div class="content">'+coupon.Title+'<br><div>Coins:'+coupon.Coins+'</div></div></div></div></div>'
-                dynamicCode+=string1+string2+string3+string4
+                string1 = '<div class="column is-half"><div class="card"><div class="card-image"><figure class="image is-4by3">'
+                string2 = '<a href="../person/read/' + coupon.id + '"><img src="' + coupon.Image + '" alt="Placeholder image"></a></figure></div>'
+                string3 = '<div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">' + coupon.Restaurant + '</p></div></div>'
+                string4 = '<div class="content">' + coupon.Title + '<br><div>Coins:' + coupon.Coins + '</div></div></div></div></div>'
+                dynamicCode += string1 + string2 + string3 + string4
             });
 
             document.querySelector("#SearchedCoupons").innerHTML = dynamicCode;
-            setPagination(limit, offset);
+            setPagination(limit, offset,newcount);
         } else {
             alert(response.status + ": " + response.statusText)
         }
     };
 
-    fetchPage(2,0);
+    fetchPage(2, 0);
 
 
 </script>
@@ -205,23 +208,18 @@
 
         if (response.ok) {
             var coupons = await response.json();
-            var dynamicCode="";
-            coupons.forEach(function (coupon) {
+            var dynamicCode = "";
+            coupons.data.forEach(function (coupon) {
                 // dynamicCode += "<tr><td>" + person.name + "</td><td>" + person.age + "</td></tr>";
-                string1='<div class="column is-half"><div class="card"><div class="card-image"><figure class="image is-4by3">'
-                string2='<a href="../person/read/'+ coupon.id+ '"><img src="'+ coupon.Image+'" alt="Placeholder image"></a></figure></div>'
-                string3='<div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">'+coupon.Restaurant+'</p></div></div>'
-                string4='<div class="content">'+coupon.Title+'<br><div>Coins:'+coupon.Coins+'</div></div></div></div></div>'
-                dynamicCode+=string1+string2+string3+string4
+                string1 = '<div class="column is-half"><div class="card"><div class="card-image"><figure class="image is-4by3">'
+                string2 = '<a href="../person/read/' + coupon.id + '"><img src="' + coupon.Image + '" alt="Placeholder image"></a></figure></div>'
+                string3 = '<div class="card-content"><div class="media"><div class="media-content"><p class="title is-4">' + coupon.Restaurant + '</p></div></div>'
+                string4 = '<div class="content">' + coupon.Title + '<br><div>Coins:' + coupon.Coins + '</div></div></div></div></div>'
+                dynamicCode += string1 + string2 + string3 + string4
             });
 
             document.querySelector("#SearchedCoupons").innerHTML = dynamicCode;
-            
-        } else if (response.status == 401) {
-            var msg = await response.json();
-            alert(msg);
-        } else {
-            alert(response.statusText);
+            setPagination(2,0,coupons.newcount);
         }
     };
 </script>
