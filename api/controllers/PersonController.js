@@ -89,55 +89,77 @@ module.exports = {
             return res.redirect("../admin");
         }
     },
-    // search  function
-    searchandpaginate: async function (req, res) {
+    // searchandpaginate  function
+    // searchandpaginate: async function (req, res) {
 
-        var whereClause = {};
+    //     var whereClause = {};
 
-        if (req.query.Region) whereClause.Region = req.query.Region;
+    //     if (req.query.Region) whereClause.Region = req.query.Region;
 
-        var parsedMinCoin = parseInt(req.query.Min_Coins);
-        var parsedMaxCoin = parseInt(req.query.Max_Coins);
-        if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
-            whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
-        } else if (!isNaN(parsedMinCoin)) {
-            whereClause.Coins = { ">=": parsedMinCoin };
-        } else if (!isNaN(parsedMaxCoin)) {
-            whereClause.Coins = { "<=": parsedMaxCoin };
-        }
+    //     var parsedMinCoin = parseInt(req.query.Min_Coins);
+    //     var parsedMaxCoin = parseInt(req.query.Max_Coins);
+    //     if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
+    //         whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
+    //     } else if (!isNaN(parsedMinCoin)) {
+    //         whereClause.Coins = { ">=": parsedMinCoin };
+    //     } else if (!isNaN(parsedMaxCoin)) {
+    //         whereClause.Coins = { "<=": parsedMaxCoin };
+    //     }
 
-        if (req.query.Expired_Date) whereClause.Expired_Date = req.query.Expired_Date;
+    //     if (req.query.Expired_Date) whereClause.Expired_Date = req.query.Expired_Date;
 
-        var limit = 2;
-        var offset = Math.max(req.query.offset, 0) || 0;
-
-
-        var thosePersons = await Person.find({
-            where: whereClause,
-            sort: 'Expired_Date',
-            limit: limit,
-            skip: offset
-        });
-
-        var count = await Person.count(
-            { where: whereClause }
-        );
-
-        return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
-    },
+    //     var limit = 2;
+    //     var offset = Math.max(req.query.offset, 0) || 0;
 
 
-    // search  function
+    //     var thosePersons = await Person.find({
+    //         where: whereClause,
+    //         sort: 'Expired_Date',
+    //         limit: limit,
+    //         skip: offset
+    //     });
+
+    //     var count = await Person.count(
+    //         { where: whereClause }
+    //     );
+
+    //     return res.view('person/searchandpaginate', { Coupons: thosePersons, numOfRecords: count });
+    // },
+
+
+    // aginate  function
     aginate: async function (req, res) {
 
         if (req.wantsJSON) {
 
+            var limit = 2;
+            var offset = Math.max(req.query.offset, 0) || 0;
+            var thosePersons = await Person.find({
+                limit: limit,
+                skip: offset
+            });
+
+            return res.json(thosePersons);
+
+        } else {
+
+            var count = await Person.count();
+
+            return res.view('person/aginate', { numOfRecords: count });
+        }
+    },
+
+    // search-Ajax function
+
+    search: async function (req, res) {
+
+        if (req.wantsJSON) {
             var whereClause = {};
 
-            if (req.query.Region) whereClause.Region = req.query.Region;
+            if (req.body.Region) whereClause.Region = req.body.Region;
 
-            var parsedMinCoin = parseInt(req.query.Min_Coins);
-            var parsedMaxCoin = parseInt(req.query.Max_Coins);
+            var parsedMinCoin = parseInt(req.body.Min_Coins);
+            var parsedMaxCoin = parseInt(req.body.Max_Coins);
             if (!isNaN(parsedMinCoin) && !isNaN(parsedMaxCoin)) {
                 whereClause.Coins = { "<=": parsedMaxCoin, ">=": parsedMinCoin };
             } else if (!isNaN(parsedMinCoin)) {
@@ -146,10 +168,10 @@ module.exports = {
                 whereClause.Coins = { "<=": parsedMaxCoin };
             }
 
-            if (req.query.Expired_Date) whereClause.Expired_Date = req.query.Expired_Date;
+            if (req.body.Expired_Date) whereClause.Expired_Date = req.body.Expired_Date;
 
             var limit = 2;
-            var offset = Math.max(req.query.offset, 0) || 0;
+            var offset = Math.max(req.body.offset, 0) || 0;
             var thosePersons = await Person.find({
                 where: whereClause,
                 sort: 'Expired_Date',
@@ -157,17 +179,15 @@ module.exports = {
                 skip: offset
             });
 
-            return res.json(thosePersons);
-
-        } else {
-            
             var count = await Person.count(
                 { where: whereClause }
             );
-
-            return res.view('person/aginate', { numOfRecords: count });
-        }
+            return res.json(thosePersons);
+        } 
     },
+    
+
+    
 
     // action  -  paginate
     //     paginate: async function (req, res) {
