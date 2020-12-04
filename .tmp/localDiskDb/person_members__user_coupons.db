@@ -1,5 +1,8 @@
 {"$$indexCreated":{"fieldName":"id","unique":true,"sparse":false}}
-{"id":79,"person_members":177,"user_coupons":125,"_id":79}
-{"id":80,"person_members":179,"user_coupons":125,"_id":80}
-{"id":81,"person_members":178,"user_coupons":126,"_id":81}
-{"id":82,"person_members":179,"user_coupons":126,"_id":82}
+{"id":104,"person_members":201,"user_coupons":143,"_id":104}
+{"id":105,"person_members":203,"user_coupons":143,"_id":105}
+{"id":106,"person_members":202,"user_coupons":144,"_id":106}
+{"id":107,"person_members":203,"user_coupons":144,"_id":107}
+{"id":108,"person_members":204,"user_coupons":144,"_id":108}
+{"id":109,"person_members":202,"user_coupons":143,"_id":109}
+{"user_coupons":144,"person_members":201,"id":110,"_id":110}

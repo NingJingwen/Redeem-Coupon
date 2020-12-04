@@ -218,9 +218,12 @@ module.exports = {
         if (!allCoupons) return res.notFound();
         thatCoupons = allCoupons.coupons
         var thatUser = await User.findOne(req.session.personid);
-
-        return res.view('person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
-
+        
+        if (req.wantsJSON) {
+            return res.json(allCoupons)
+        } else {
+            return res.view('person/MyRedeemedCoupons', { Coupons: thatCoupons, User: thatUser });
+        }
 
     },
 
@@ -229,5 +232,18 @@ module.exports = {
         thatMembers = allMembers.members
 
         return res.view('person/RedeemedMember', { Users: thatMembers });
+    },
+
+    AllCoupons: async function (req, res) {
+        var AllCoupons = await Person.find()
+        if (req.wantsJSON) return res.json(AllCoupons);
+    },
+
+    GetUser: async function (req, res) {
+        if (req.session.personid) {
+            var thatUser = await User.findOne(req.session.personid);
+        };
+        return res.json(thatUser)
+
     }
 }

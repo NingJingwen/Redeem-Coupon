@@ -64,5 +64,8 @@ module.exports.routes = {
   'POST /user/:id/coupons/add/:fk': 'UserController.add',
   'POST /user/:id/coupons/remove/:fk': 'UserController.remove',
 
-  'GET /user/json':'UserController.json'
+  'GET /user/json':'UserController.json',
+
+  'GET /AllCoupons':'PersonController.AllCoupons',
+  'GET /GetUser':'PersonController.GetUser'
 };

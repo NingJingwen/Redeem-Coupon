@@ -1,5 +1,6 @@
 {"$$indexCreated":{"fieldName":"id","unique":true,"sparse":false}}
 {"$$indexCreated":{"fieldName":"username","unique":true,"sparse":false}}
-{"createdAt":1605621186199,"updatedAt":1605621186199,"id":124,"username":"admin","password":"$2a$10$K.SmV.trL9/RdnrkIKUT7eq5HEwf0mNENx9cGMDJYMenxKmmXsk0K","coins":0,"role":"admin","_id":124}
-{"createdAt":1605621186199,"updatedAt":1605621186199,"id":125,"username":"Ricardo","password":"$2a$10$K.SmV.trL9/RdnrkIKUT7eq5HEwf0mNENx9cGMDJYMenxKmmXsk0K","coins":40,"role":"member","_id":125}
-{"createdAt":1605621186199,"updatedAt":1605621186199,"id":126,"username":"Martin","password":"$2a$10$K.SmV.trL9/RdnrkIKUT7eq5HEwf0mNENx9cGMDJYMenxKmmXsk0K","coins":200,"role":"member","_id":126}
+{"createdAt":1606803740430,"updatedAt":1606803740430,"id":142,"username":"admin","password":"$2a$10$GrLtkpQCa7x04RK5J9X46OWJqgZbC//mxBaty7CWwt.5Z2XqmRPHC","coins":0,"role":"admin","_id":142}
+{"createdAt":1606803740430,"updatedAt":1606919416766,"id":143,"username":"Ricardo","password":"$2a$10$GrLtkpQCa7x04RK5J9X46OWJqgZbC//mxBaty7CWwt.5Z2XqmRPHC","coins":10,"role":"member","_id":143}
+{"createdAt":1606803740430,"updatedAt":1606912664688,"id":144,"username":"Martin","password":"$2a$10$GrLtkpQCa7x04RK5J9X46OWJqgZbC//mxBaty7CWwt.5Z2XqmRPHC","coins":150,"role":"member","_id":144}
+{"createdAt":1606803740430,"updatedAt":1607068664097,"id":144,"username":"Martin","password":"$2a$10$GrLtkpQCa7x04RK5J9X46OWJqgZbC//mxBaty7CWwt.5Z2XqmRPHC","coins":130,"role":"member","_id":144}
