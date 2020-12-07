@@ -22,7 +22,7 @@ module.exports = {
         if (!user) return res.status(401).json("User not found");
 
         var match = await sails.bcrypt.compare(req.body.password, user.password);
- 
+
         if (!match)
             return res.status(401).json("Wrong Password");
         // Reuse existing session 
@@ -69,7 +69,7 @@ module.exports = {
     add: async function (req, res) {
 
         if (!req.session.personid) return res.status(404).json("Please login first!");
-        
+
         if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
 
         var thatPerson = await Person.findOne(req.params.fk).populate("members", { id: req.params.id });
@@ -79,16 +79,17 @@ module.exports = {
         if (thatPerson.members.length > 0)
             return res.status(404).json("Already added!");   // conflict
 
-        var Couponcoins = await Person.findOne(req.params.fk)
-        var Usercoins = await User.findOne(req.params.id)
-        Couponcoins = Couponcoins.Coins
-        Usercoins = Usercoins.coins
+        var OneCoupon = await Person.findOne(req.params.fk)
+        var OneUser = await User.findOne(req.params.id)
+        Couponcoins = OneCoupon.Coins
+        Usercoins = OneUser.coins
+        Couponquota = OneCoupon.Quota
 
         if (Usercoins < Couponcoins) {
             return res.status(404).json("Insufficient Coins！")
+        } else if (Couponquota == 0) {
+            return res.status(404).json("Insufficient Quota!")
         } else {
-            var Couponquota = await Person.findOne(req.params.fk)
-            Couponquota = Couponquota.Quota
             Newcoins = Usercoins - Couponcoins;
             Newquota = Couponquota - 1;
             await Person.updateOne(req.params.fk).set({ 'Quota': Newquota });
