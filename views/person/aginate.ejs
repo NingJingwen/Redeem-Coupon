@@ -99,13 +99,13 @@
 <script>
     function setPagination(limit, offset,newcount) {
 
-        var previousButton = document.getElementById("previousButton");
-        var nextButton = document.getElementById("nextButton");
-        var currentLink = document.getElementById("currentLink");
-        var previousLink = document.getElementById("previousLink");
-        var nextLink = document.getElementById("nextLink");
-        var firstLink = document.getElementById("firstLink");
-        var lastLink = document.getElementById("lastLink");
+        // var previousButton = document.getElementById("previousButton");
+        // var nextButton = document.getElementById("nextButton");
+        // var currentLink = document.getElementById("currentLink");
+        // var previousLink = document.getElementById("previousLink");
+        // var nextLink = document.getElementById("nextLink");
+        // var firstLink = document.getElementById("firstLink");
+        // var lastLink = document.getElementById("lastLink");
         if(isNaN(newcount)){
         var numOfRecords = parseInt("<%= numOfRecords %>");
         }else{
@@ -140,7 +140,7 @@
 
         if (offset < limit) {
             previousButton.setAttribute("disabled", true);
-            previousButton.href = "";
+            previousButton.onclick = "";
             previousLink.style.display = "none";
         } else {
             previousButton.removeAttribute("disabled");
@@ -149,7 +149,7 @@
 
         if (offset + limit >= numOfRecords) {
             nextButton.setAttribute("disabled", true);
-            nextButton.href = "";
+            nextButton.onclick = "";
             nextLink.style.display = "none";
         } else {
             nextButton.removeAttribute("disabled");

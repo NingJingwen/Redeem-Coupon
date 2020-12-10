@@ -152,7 +152,7 @@ module.exports = {
                 if (req.body.Expired_Date) whereClause.Expired_Date = req.body.Expired_Date;
 
                 var limit = 2;
-                var offset = 0;
+                var offset = Math.max(req.query.offset,0)||0;
 
                 var thosePersons = await Person.find({
                     where: whereClause,
@@ -168,7 +168,7 @@ module.exports = {
                 return res.json({ data: thosePersons, newcount: count });
             } else {
                 var limit = 2;
-                var offset = 0;
+                var offset = Math.max(req.query.offset,0)||0;
 
                 var thosePersons = await Person.find({
                     where: whereClause,

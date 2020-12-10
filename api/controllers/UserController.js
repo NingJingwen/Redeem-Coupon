@@ -75,9 +75,9 @@ module.exports = {
         var thatPerson = await Person.findOne(req.params.fk).populate("members", { id: req.params.id });
 
         if (!thatPerson) return res.status(404).json("Coupon not found.");
-
+        // console.log(thatPerson.members.length);
         if (thatPerson.members.length > 0)
-            return res.status(404).json("Already added!");   // conflict
+            return res.status(409).json("Already added!");   // conflict
 
         var OneCoupon = await Person.findOne(req.params.fk)
         var OneUser = await User.findOne(req.params.id)
