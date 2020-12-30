@@ -1,5 +1,5 @@
 {"$$indexCreated":{"fieldName":"id","unique":true,"sparse":false}}
 {"$$indexCreated":{"fieldName":"username","unique":true,"sparse":false}}
-{"createdAt":1607586687288,"updatedAt":1607586687288,"id":166,"username":"admin","password":"$2a$10$cmoAuiyJyWzUzoJnrynsAeqNouPKwk.0BH6harISzfqeZdhFffFBm","coins":0,"role":"admin","_id":166}
-{"createdAt":1607586687288,"updatedAt":1607586687288,"id":167,"username":"Ricardo","password":"$2a$10$cmoAuiyJyWzUzoJnrynsAeqNouPKwk.0BH6harISzfqeZdhFffFBm","coins":300,"role":"member","_id":167}
-{"createdAt":1607586687288,"updatedAt":1607586687288,"id":168,"username":"Martin","password":"$2a$10$cmoAuiyJyWzUzoJnrynsAeqNouPKwk.0BH6harISzfqeZdhFffFBm","coins":300000,"role":"member","_id":168}
+{"username":"admin","password":"$2a$10$f/.ELoOLrLoF.UmebvO2YuSWM6l9ZRCLjhsc.pis83cdgocBBps1O","role":"admin","createdAt":1609320894443,"updatedAt":1609320894443,"id":175,"coins":0,"_id":175}
+{"username":"Ricardo","password":"$2a$10$f/.ELoOLrLoF.UmebvO2YuSWM6l9ZRCLjhsc.pis83cdgocBBps1O","coins":300,"role":"member","createdAt":1609320894443,"updatedAt":1609320894443,"id":176,"_id":176}
+{"username":"Martin","password":"$2a$10$f/.ELoOLrLoF.UmebvO2YuSWM6l9ZRCLjhsc.pis83cdgocBBps1O","coins":300000,"role":"member","createdAt":1609320894443,"updatedAt":1609320894443,"id":177,"_id":177}

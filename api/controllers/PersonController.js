@@ -38,7 +38,7 @@ module.exports = {
 
     //admin
     admin: async function (req, res) {
-        var everyones = await Person.find();
+        var everyones = await Person.find({sort: 'Expired_Date'});
         return res.view("person/admin", { Coupons: everyones });
     },
 
@@ -133,9 +133,10 @@ module.exports = {
     aginate: async function (req, res) {
 
         if (req.wantsJSON) {
-
-            var whereClause = {};
             if (req.method == "POST") {
+
+                var whereClause = {};
+
 
                 if (req.body.Region) whereClause.Region = req.body.Region;
 
@@ -152,7 +153,7 @@ module.exports = {
                 if (req.body.Expired_Date) whereClause.Expired_Date = req.body.Expired_Date;
 
                 var limit = 2;
-                var offset = Math.max(req.query.offset,0)||0;
+                var offset = Math.max(req.query.offset, 0) || 0;
 
                 var thosePersons = await Person.find({
                     where: whereClause,
@@ -168,7 +169,7 @@ module.exports = {
                 return res.json({ data: thosePersons, newcount: count });
             } else {
                 var limit = 2;
-                var offset = Math.max(req.query.offset,0)||0;
+                var offset = Math.max(req.query.offset, 0) || 0;
 
                 var thosePersons = await Person.find({
                     where: whereClause,
@@ -183,6 +184,7 @@ module.exports = {
                 );
                 return res.json({ data: thosePersons, newcount: count });
             }
+
         } else {
 
             var count = await Person.count();
@@ -191,34 +193,13 @@ module.exports = {
         }
     },
 
-
-
-
-    // action  -  paginate
-    //     paginate: async function (req, res) {
-
-    //         var limit=2;
-    //         var offset=Math.max(req.query.offset,0)||0;
-
-    //         var somePersons = await Person.find({
-    //             sort: 'Expired_Date',
-    //             limit: limit,
-    //             skip: offset
-    //         });
-
-    //         var count = await Person.count();
-
-    //         return res.view('person/searchandpaginate', { Coupons: somePersons, numOfRecords: count });
-    //     },
-
-    //MyRedeemedCoupons
     populatecoupons: async function (req, res) {
 
         var allCoupons = await User.findOne(req.session.personid).populate('coupons');
         if (!allCoupons) return res.notFound();
         thatCoupons = allCoupons.coupons
         var thatUser = await User.findOne(req.session.personid);
-        
+
         if (req.wantsJSON) {
             return res.json(allCoupons)
         } else {
